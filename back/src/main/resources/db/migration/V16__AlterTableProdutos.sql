@@ -1,0 +1,1 @@
+ALTER TABLE produtos add column tipo VARCHAR(100);
