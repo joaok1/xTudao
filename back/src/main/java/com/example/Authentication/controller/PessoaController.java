@@ -7,6 +7,8 @@ import com.example.Authentication.services.PessoaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -48,6 +50,11 @@ public class PessoaController {
     @GetMapping(value = "findByUser/{login}", produces = "application/json")
     public Optional<Pessoa> findByPessoaByUser(@PathVariable String login) {
         return pessoaService.findByPessoaByUser(login);
+    }
+    @CrossOrigin(origins = "http://localhost:8080/")
+    @GetMapping(value = "findByAllPessoa", produces = "application/json")
+    public Page<Pessoa> findByAllPessoa(Pageable pageable) {
+        return pessoaService.findByAll(pageable);
     }
 }
 

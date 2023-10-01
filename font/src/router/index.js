@@ -3,6 +3,9 @@ import VueRouter from "vue-router";
 import home from "../views/home/home.vue";
 import login from "../views/Login.vue";
 import listProdutos from "../views/produtos/ListProdutos.vue";
+import listFuncionario from "../views/funcionarios/ListFuncionarios.vue";
+import cadastrarFuncionario from "../views/funcionarios/CadastrarFuncionario.vue";
+
 import store from "@/store";
 
 Vue.use(VueRouter);
@@ -31,6 +34,19 @@ const routes = [
     path: "/listagem/produtos",
     name: "listagemprodutos",
     component: listProdutos,
+    beforeEnter: requireAuth,
+  },
+  {
+    path: "/listagem/funcionarios",
+    name: "listagemFuncionarios",
+    component: listFuncionario,
+    beforeEnter: requireAuth,
+  },
+  {
+    path: "/cadastrar/funcionarios",
+    name: "cadastrarFuncionarios",
+    component: cadastrarFuncionario,
+    beforeEnter: requireAuth,
   },
 ];
 

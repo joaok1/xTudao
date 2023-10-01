@@ -1,3 +1,4 @@
+<!-- eslint-disable prettier/prettier -->
 <!-- eslint-disable vue/no-parsing-error -->
 <template>
   <el-menu
@@ -27,8 +28,20 @@
       <i class="el-icon-user"></i>
       <span slot="title">Funcionários</span>
     </el-menu-item>
+    <!-- <div
+      style="
+        bottom: 0em;
+        margin-top: 33em;
+        position: relative;
+        text-align: center;
+      "
+    >
+      <el-tag index="6" effect="dark" type="info">
+        <span>{{ this.name }}</span>
+      </el-tag>
+    </div> -->
     <el-menu-item
-      index="6"
+      index="7"
       style="
         bottom: 0;
         margin-bottom: 20px;
@@ -51,14 +64,23 @@
 </template>
 
 <script>
+import funcoes from "@/methods/funções";
+
 export default {
   data() {
     return {
+      name: null,
       isCollapse: false,
     };
   },
-  mounted() {},
+  async mounted() {
+    await this.getUserName();
+  },
   methods: {
+    async getUserName() {
+      const userName = await funcoes.Login();
+      this.name = userName.data.namePessoa;
+    },
     async logout() {
       await this.$store.dispatch("logout");
     },

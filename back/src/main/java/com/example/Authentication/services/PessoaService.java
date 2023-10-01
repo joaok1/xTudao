@@ -10,6 +10,8 @@ import com.example.Authentication.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -51,8 +53,8 @@ public class PessoaService {
             pessoa.setCpf(pessoaDTO.getCpf());
             pessoa.setEmail(pessoaDTO.getEmail());
             pessoa.setCep(pessoa.getCep());
+            pessoa.setSexo(pessoaDTO.getSexo());
             pessoa.setEndereco(pessoaDTO.getEndereco());
-            pessoa.setBairro(pessoaDTO.getBairro());
             pessoa.setCidade(pessoa.getCidade());
             pessoa.setEstado(pessoaDTO.getEstado());
             pessoa.setTelefone(pessoaDTO.getTelefone());
@@ -85,5 +87,9 @@ public class PessoaService {
     public Optional<Pessoa> findByPessoaByUser(String login) {
         Optional<Usuario> user = usuarioRepository.findByLogin(login);
         return pessoaRepository.findByUsuario(user.get());
+    }
+
+    public Page<Pessoa> findByAll(Pageable pageable) {
+        return pessoaRepository.findAll(pageable);
     }
 }

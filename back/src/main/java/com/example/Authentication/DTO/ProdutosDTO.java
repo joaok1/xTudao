@@ -11,6 +11,7 @@ public class ProdutosDTO {
     private String nome;
     private String fator;
     private String tipo;
+    private Boolean nivelStoque;
     private Double porcao;
     private Double valor;
     private Double quantidade;

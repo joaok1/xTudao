@@ -149,6 +149,7 @@ export default {
 .box {
   width: 300px;
   height: 300px;
+  margin-bottom: 10em;
   background: #fff;
 }
 </style>

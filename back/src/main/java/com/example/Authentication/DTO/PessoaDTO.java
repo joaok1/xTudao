@@ -18,6 +18,8 @@ public class PessoaDTO {
 
     private String sobrenome;
 
+    private String sexo;
+
     private Date data_nascimento;
 
     private String cpf;

@@ -2,6 +2,7 @@ package com.example.Authentication.model;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -18,6 +19,8 @@ public class Produtos {
     private Short id;
     private String nome;
     private String tipo;
+    @Transient
+    private Boolean nivelStoque;
     @Column(name = "fator_medida_peso")
     private String fator;
     private Double porcao;

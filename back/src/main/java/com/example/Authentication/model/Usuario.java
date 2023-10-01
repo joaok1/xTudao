@@ -1,5 +1,6 @@
 package com.example.Authentication.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,6 +34,6 @@ public class Usuario {
     @Column(name = "documento_image")
     private String documento;
     @Transient
-    private Pessoa pessoa;
+    private String namePessoa;
 
 }

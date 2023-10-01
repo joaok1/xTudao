@@ -1,5 +1,6 @@
 package com.example.Authentication.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,6 +24,7 @@ public class Pessoa {
 
     private String sobrenome;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone="GMT-3")
     private Date data_nascimento;
 
     private String cpf;
@@ -33,8 +35,6 @@ public class Pessoa {
 
     private String endereco;
 
-    private String Bairro;
-
     private String cidade;
 
     private String estado;
@@ -42,6 +42,8 @@ public class Pessoa {
     private String telefone;
 
     private String email;
+
+    private String sexo;
 
     @OneToOne
     @JoinColumn(name = "usuario_id", referencedColumnName = "id")

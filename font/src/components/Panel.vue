@@ -1,25 +1,40 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template lang="pug">
-div
-    el-card.card
-      .panel-header
-        .title
-          span.title-font(v-if="title") {{title}}
-          el-tooltip.tooltip(v-if="haveTooltip" :content="textTooltip" placement="bottom", effect="dark")
-            font-awesome-icon.question-circle( :icon="['fas', 'question-circle']")
-        el-button.button(type="secondary", v-if="(buttonText || buttonIcon) && hasPermissionAcao(permissaoTela, routeGroup)", @click="buttonAction")
-          font-awesome-icon.icon(:icon="['fas', buttonIcon]")
-          span {{buttonText}}
-        el-button.button(
-          type="secondary"
-          v-if="(secondaryButton && (secondaryButtonText || secondaryButtonIcon)) && hasPermissionAcao(permissaoTela, routeGroup)"
-          @click="secondaryButtonAction"
-        )
-          font-awesome-icon.icon(:icon="['fas', secondaryButtonIcon]")
-          span {{secondaryButtonText}}
-      .panel-body
-        slot
-
+el-card.card
+  .panel-header
+    .title
+      span.title-font(v-if='title') {{ title }}
+      el-tooltip.tooltip(
+        v-if='haveTooltip',
+        :content='textTooltip',
+        placement='bottom',
+        effect='dark'
+      )
+        font-awesome-icon.question-circle(:icon='["fas", "question-circle"]')
+    div.margin
+      el-dropdown.width(
+        size='medium',
+        split-button,
+        type='secondary',
+        v-if='dropdown && hasPermissionAcao(permissaoTela, routeGroup)'
+      ) Exportar
+        el-dropdown-menu(slot='dropdown')
+          el-dropdown-item(@click.native='exportarPdf')
+            font-awesome-icon.icon(:icon='["fas", "file-pdf"]')
+            label &nbsp PDF
+          el-dropdown-item(@click.native='exportarCsv')
+            font-awesome-icon.icon(:icon='["fas", "file-excel"]')
+            label &nbsp CSV
+    div
+      el-button.button(
+        type='secondary',
+        v-if='(buttonText || buttonIcon) && hasPermissionAcao(permissaoTela, routeGroup)',
+        @click.native='buttonAction'
+      )
+        font-awesome-icon.icon(:icon='["fas", buttonIcon]')
+        span.buttonText {{ buttonText }}
+  .panel-body
+    slot
 </template>
 <script>
 import { mapGetters } from "vuex";
@@ -60,36 +75,30 @@ export default {
       required: false,
       type: String,
     },
-    secondaryButton: {
+    exportar: {
       required: false,
-      default: false,
       type: Boolean,
     },
-    secondaryButtonText: {
+    dropdown: {
       required: false,
-      type: String,
-    },
-    secondaryButtonIcon: {
-      required: false,
-      type: String,
+      type: Boolean,
     },
   },
   methods: {
+    exportarCsv() {
+      this.$emit("downloadCsv");
+    },
+    exportarPdf() {
+      this.$emit("downloadPdf");
+    },
     buttonAction() {
       this.$emit("goToCadastro");
-    },
-
-    secondaryButtonAction() {
-      this.$emit("secondaryButtonAction");
     },
   },
 };
 </script>
 
 <style scoped>
-.icon {
-  margin-right: 8px;
-}
 .card {
   margin-bottom: 25px;
   padding: 10px;
@@ -108,11 +117,23 @@ export default {
   margin-left: 2%;
 }
 .panel-body {
-  padding-top: 0px;
+  padding-top: 15px;
 }
 .panel-header {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: flex-start;
+}
+.dropdown {
+  padding: 10px;
+}
+.panel {
+  justify-content: flex-end;
+}
+.margin {
+  display: flex;
+  justify-content: flex-end;
+  width: 200px;
+  margin-right: 10px;
 }
 </style>

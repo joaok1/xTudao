@@ -1,6 +1,7 @@
 package com.example.Authentication.services;
 
 import com.example.Authentication.Interfaces.RolesInterface;
+import com.example.Authentication.model.Pessoa;
 import com.example.Authentication.model.Usuario;
 import com.example.Authentication.repository.PessoaRepository;
 import com.example.Authentication.repository.UsuarioRepository;
@@ -65,7 +66,9 @@ public class UsuarioService implements UserDetailsService {
 
 
     public Usuario findByLogin(String login) {
-        Optional<Usuario> user = usuarioRepository.findByLogin(login);
-        return user.get();
+        Usuario user = usuarioRepository.findByLogin(login).get();
+        Pessoa pessoaOptional =  pessoaRepository.findByUsuario(user).get();
+        user.setNamePessoa(pessoaOptional.getNome()+ " " + pessoaOptional.getSobrenome());
+        return user;
     }
 }
