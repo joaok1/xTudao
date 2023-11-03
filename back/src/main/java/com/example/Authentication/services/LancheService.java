@@ -41,11 +41,11 @@ public class LancheService {
         List<ListLancheIngrediente> listagemLancheIngredientes = new ArrayList<>();
         for (ListLancheIngrediente listLanche :lancheDTO.getListagemIngrediente()) {
             ListLancheIngrediente listLancheIngrediente = new ListLancheIngrediente();
-            Optional<Produtos> ingrediente = produtosRepository.findById(listLanche.getProdutos().getId());
-            listLancheIngrediente.setProdutos(ingrediente.get());
-            listLancheIngrediente.setLanche(lanche);
-            double valor = ingrediente.get().getValor();
+            Produtos ingrediente = produtosRepository.findById(listLanche.getProdutos().getId()).get();
+            listLancheIngrediente.setProdutos(ingrediente);
+            double valor = ingrediente.getValor();
             soma+=valor;
+            listLancheIngrediente.setLanche(lanche);
             listagemLancheIngredientes.add(listLancheIngrediente);
         }
         lanche.setGasto_confeccao(soma);

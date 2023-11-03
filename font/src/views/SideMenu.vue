@@ -12,6 +12,9 @@
     :router="true"
   >
     <img class="logo" src="@/assets/logo.png" />
+    <el-menu-item  @click="collapse(isCollapse)" >
+      <i :class="isCollapse === true ? 'el-icon-s-unfold' : 'el-icon-s-fold'" class="collapse"></i>
+    </el-menu-item>
     <el-menu-item index="home" @click="home()">
       <i class="el-icon-s-home"></i>
       <span slot="title">Home</span>
@@ -77,6 +80,13 @@ export default {
     await this.getUserName();
   },
   methods: {
+    collapse(value) {
+      if (value === false) {
+        this.isCollapse = true;
+      } else {
+        this.isCollapse = false;
+      }
+    },
     async getUserName() {
       const userName = await funcoes.Login();
       this.name = userName.data.namePessoa;
@@ -125,6 +135,11 @@ export default {
 .logo {
   width: 200px;
   margin-bottom: 5px;
+}
+
+.collapse {
+  color: #ffd04b;
+  font-size: 20px;
 }
 
 .el-menu-vertical-demo:not(.el-menu--collapse) {

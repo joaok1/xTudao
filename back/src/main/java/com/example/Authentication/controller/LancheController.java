@@ -18,6 +18,7 @@ import java.util.Optional;
 @RequestMapping("/api/lanche/")
 @Slf4j
 @Controller
+@CrossOrigin(origins = "http://localhost:3000/")
 public class LancheController {
 
     @Autowired
@@ -27,35 +28,30 @@ public class LancheController {
         this.lancheService = lancheService;
     }
 
-    @CrossOrigin(origins = "http://localhost:8080/")
     @PostMapping(value = "adicionar", produces = "application/json")
     public HttpStatus inserirDespesas(@RequestBody LancheDTO lancheDTO) throws Throwable {
            HttpStatus httpStatus = lancheService.addLanche(lancheDTO);
             return httpStatus;
     }
 
-    @CrossOrigin(origins = "http://localhost:8080/")
     @GetMapping(value = "findById/{id}", produces = "application/json")
     public Optional<Lanche> findById(@PathVariable Short id) {
         return lancheService.findById(id);
     }
 
-    @CrossOrigin(origins = "http://localhost:8080/")
     @PutMapping(value = "edit")
     public HttpStatus editById(@RequestBody Lanche lanche) throws Exception {
         lancheService.editById(lanche);
         return HttpStatus.OK;
     }
 
-    @CrossOrigin(origins = "http://localhost:8080/")
     @DeleteMapping(value = "deleteById/{id}", produces = "application/json")
     public HttpStatus deleteById(@PathVariable Short id) throws Exception {
         return lancheService.deleteById(id);
     }
 
-    @CrossOrigin(origins = "http://localhost:8080/")
     @GetMapping(value = "findAll", produces = "application/json")
-    public List<Lanche> findByPessoaByUser() {
+    public List<Lanche> findAll() {
         return lancheService.findAll();
     }
 }

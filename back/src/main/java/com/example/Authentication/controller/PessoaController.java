@@ -19,6 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RequestMapping("/api/pessoa/")
 @Slf4j
+//@CrossOrigin(origins = "http://localhost:")
 public class PessoaController {
     @Autowired
     private PessoaService pessoaService;
@@ -27,31 +28,26 @@ public class PessoaController {
     private static PessoaRepository pessoaRepository;
 
 
-    @CrossOrigin(origins = "http://localhost:8080/")
     @PostMapping(value = "adicionar", produces = "application/json")
     public ResponseEntity<String> salvarPessoa(@RequestBody PessoaDTO pessoaDTO) throws Exception {
         pessoaService.adicionarPessoa(pessoaDTO);
         return ResponseEntity.ok("Pessoa Cadastrada com sucesso");
     }
 
-    @CrossOrigin(origins = "http://localhost:8080/")
     @GetMapping(value = "findById/{id}", produces = "application/json")
     public Optional<Pessoa> findById(@PathVariable Short id) {
         return pessoaService.findById(id);
     }
 
-    @CrossOrigin(origins = "http://localhost:8080/")
     @DeleteMapping(value = "deleteById/{id}", produces = "application/json")
     public ResponseEntity<String> deleteById(@PathVariable Short id) {
         return pessoaService.deleteById(id);
     }
 
-    @CrossOrigin(origins = "http://localhost:8080/")
     @GetMapping(value = "findByUser/{login}", produces = "application/json")
     public Optional<Pessoa> findByPessoaByUser(@PathVariable String login) {
         return pessoaService.findByPessoaByUser(login);
     }
-    @CrossOrigin(origins = "http://localhost:8080/")
     @GetMapping(value = "findByAllPessoa", produces = "application/json")
     public Page<Pessoa> findByAllPessoa(Pageable pageable) {
         return pessoaService.findByAll(pageable);

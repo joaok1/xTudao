@@ -2,6 +2,7 @@ package com.example.Authentication.DTO;
 
 import com.example.Authentication.model.FileName;
 import com.example.Authentication.model.Usuario;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ public class PessoaDTO {
 
     private String sexo;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", timezone="GMT-3")
     private Date data_nascimento;
 
     private String cpf;
@@ -30,7 +32,7 @@ public class PessoaDTO {
 
     private String endereco;
 
-    private String Bairro;
+    private String logradouro;
 
     private String cidade;
 
@@ -44,6 +46,6 @@ public class PessoaDTO {
 
     private FileName file;
 
-    private Short role;
+    private String role;
 
 }

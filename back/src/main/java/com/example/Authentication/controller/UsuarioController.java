@@ -3,20 +3,23 @@ package com.example.Authentication.controller;
 
 import com.example.Authentication.DTO.CredenciaisDTO;
 import com.example.Authentication.DTO.TokenDTO;
+import com.example.Authentication.Interfaces.RolesInterface;
 import com.example.Authentication.model.Usuario;
 import com.example.Authentication.securityJwt.JwtService;
 import com.example.Authentication.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/usuarios")
-@CrossOrigin(origins = "http://localhost:8080")
 public class UsuarioController {
 
     @Autowired
@@ -56,6 +59,11 @@ public class UsuarioController {
     @GetMapping("/validatorUser/{token}")
     public boolean userValidator(@PathVariable String token) {
         return  jwtService.tokenValido(token);
+    }
+
+    @DeleteMapping(value = "deleteById/{id}", produces = "application/json")
+    public ResponseEntity<String> deleteById(@PathVariable Short id) {
+        return usuarioService.deleteById(id);
     }
 
 }

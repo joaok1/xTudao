@@ -48,5 +48,27 @@ const actions = {
     };
     return axios(data);
   },
+  async cadastroFuncionario(object) {
+    const data = {
+      method: "post",
+      url: `http://localhost:1080/api/pessoa/adicionar`,
+      data: object,
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+    };
+    return axios(data);
+  },
+  async excluirFuncionario(id) {
+    const data = {
+      method: "delete",
+      url: `http://localhost:1080/api/usuarios/deleteById/${id}`,
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+    };
+    console.log(data);
+    return axios(data);
+  },
 };
 export default actions;

@@ -1,166 +1,189 @@
 <template lang="pug">
 div
     panel(
-      title='Dados pessoais',
+      title="Dados Pessoais"
     )
-      el-input(
-        v-model='colaborador.nome',
-        style="margin:1em"
-        placeholder='Nome completo:',
-      )
-      el-input(
-        v-model='colaborador.sobrenome',
-        style="margin:1em"
-        placeholder='Sobrenome:',
-      )
       el-row
-        el-col
-          el-col(:span="4", style="padding:10px")
+          el-col(:span="8")
+            span Nome:
+            el-input(
+              v-model='colaborador.nome',
+              clearable
+              placeholder='Nome completo:',
+            )
+          el-col(:span="8")
+            span Sobrenome:
+            el-input(
+              v-model='colaborador.sobrenome',
+              placeholder='Sobrenome:',
+              clearable
+            )
+          el-col(:span="4")
+            span Sexo:
             el-select(
               v-model='colaborador.sexo',
               :initialValues='colaborador.sexo',
               name='sexo',
-              style="margin:1em; width:100%"
               placeholder='Sexo:',
-              rules='required',
-              :options='listSexo',
-              optionKey='id',
-              optionplaceholder='genero',
-              optionValueKey='genero'
-                )
-          el-col(:span="6", style="padding:10px")
+              clearable
+            )
+              el-option(
+                v-for="item in sexo"
+                :key="item.value"
+                :label="item.value"
+                :value="item.value"
+              )
+          el-col(:span="4")
+            span Data de nascimento:
             el-date-picker(
-              v-model='colaborador.dataNascimento',
+              v-model='colaborador.data_nascimento',
+              clearable
               name='dataNascimento',
-              style="margin:1em; width:100%"
+              style="width:100%"
               placeholder='Selecione uma data',
               format='dd/MM/yyyy',
               type='date',
               value-format='dd/MM/yyyy',
               align='center'
             )
-          el-col(:span="4", style="padding:10px")
-            el-input(
-              placeholder='CPF:',
-              style="margin:1em"
-              rules='required',
-              v-model='colaborador.cpfCnpj',
-              :valorInicial='colaborador.cpfCnpj',
-              v-mask='\'###.###.###-##\'',
-              :blur='validateCpf'
-            )
-          el-col(:span="6", style="padding:10px")
-            el-input(
-              placeholder='Senha:',
-              style="margin:1em; width:100%"
-              show-password="false"
-              rules='required',
-              type="password"
-              v-model='colaborador.usuario.senha',
-              :valorInicial='colaborador.cpfCnpj',
-            )
       el-row
-        el-col(:span="4", style="padding:10px")
+        el-col(:span="6")
+          span CPF:
           el-input(
-            placeholder='Telefone:',
-            style="margin:1em"
+            placeholder='CPF:',
+            clearable
             rules='required',
-            v-model='colaborador.telefone',
-            :valorInicial='colaborador.telefone',
-            v-mask='\'(##) #####-####\''
+            v-model='colaborador.cpf',
+            :valorInicial='colaborador.cpf',
+            v-mask='\'###.###.###-##\'',
+            :blur='validateCpf'
           )
-        el-col(:span="4", style="padding:10px")
+        el-col(:span="4")
+          span Cargo:
+          el-select(
+            placeholder="Selecione o cargo",
+            clearable
+            v-model='colaborador.role'
+          )
+            el-option(
+              v-for="item in role"
+              :key="item.value"
+              :label="item.value"
+              :value="item.value"
+            )
+    panel(
+        title="Endereço"
+    )
+      el-row
+        el-col(:span="4")
+          span CEP:
           el-input(
             placeholder='CEP:',
-            style="margin:1em"
             rules='required',
+            clearable
             v-model='colaborador.cep',
             :valorInicial='colaborador.cep',
             v-mask='\'#####-###\'',
             :blur='searchCep',
             @change='searchCep'
           )
-        el-col(:span="6", style="padding:10px")
-          el-select(
-            v-model='colaborador.municipioEndereco.id',
-            :initialValues='colaborador.municipioEndereco.id',
+        el-col(:span="6")
+          span Município:
+          el-input(
+            v-model='colaborador.cidade',
             name='municipio',
-            style="margin:1em; width:100%"
+            clearable
             :disabled='cepEncontrado',
             placeholder='Município:',
-            rules='required',
-            :options='listMunicipioEndereco',
-            optionKey='id',
-            optionplaceholder='nome',
-            optionValueKey='id'
           )
-      el-row(:md='12', :sm='24')
-        el-col(:span="4", style="padding:10px")
-          el-input(
-            placeholder='Email:',
-            rules='required',
-            type='email',
-            style="margin:1em"
-            v-model='colaborador.email',
-            :valorInicial='colaborador.email'
-          )
-        el-col(:span="4", style="padding:10px")
+        el-col(:span="6", style="padding:10px")
+          span Logradouro:
           el-input(
             placeholder='Logradouro:',
             rules='required',
-            style="margin:1em"
+            clearable
             :disabled='logradouroEncontrado',
-            v-model='colaborador.logradouro',
-            :valorInicial='colaborador.logradouro',
+            v-model='colaborador.endereco',
+            :valorInicial='colaborador.endereco',
             maxlength='300'
           )
-        el-col(:span="6", style="padding:10px")
+        el-col(:span="6")
+          span Número:
           el-input(
             placeholder='Número:',
             rules='required',
-            style="margin:1em"
+            clearable
             v-model='colaborador.numero',
             :valorInicial='colaborador.numero'
           )
-      el-row
-        el-col(:span="4", style="padding:10px")
-            el-input(
-              placeholder='Bairro:',
-              rules='required',
-              style="margin:1em"
-              :disabled='bairroEncontrado',
-              v-model='colaborador.bairro',
-              :valorInicial='colaborador.bairro'
-            )
-        el-col(:span="4", style="padding:10px")
+          el-row
+        el-col(:span="4")
+          span Bairro:
+          el-input(
+            placeholder='Bairro:',
+            rules='required',
+            clearable
+            :disabled='bairroEncontrado',
+            v-model='colaborador.bairro',
+            :valorInicial='colaborador.bairro'
+          )
+        el-col(:span="4")
+          span Estado:
           el-input(
             placeholder='Estado:',
             rules='required',
-            style="margin:1em"
+            clearable
             :disabled='bairroEncontrado',
             v-model='colaborador.estado',
             :valorInicial='colaborador.estado'
           )
-        el-col(:span="6", style="padding:10px")
-          el-select(
-            v-model='colaborador.dadosEmpresarialAtual && colaborador.dadosEmpresarialAtual.cargo.id',
-            :initialValues='colaborador.dadosEmpresarialAtual && colaborador.dadosEmpresarialAtual.cargo.id',
-            name='cargo',
-            placeholder='Cargo:',
-            style="margin:1em; width:100%;"
+    panel(
+      title="Contatos"
+    )
+      el-row
+        el-col(:span="8")
+          span Email:
+          el-input(
+            placeholder='Email:',
             rules='required',
-            :options='listCargos',
-            optionKey='id',
-            optionplaceholder='nome',
-            optionValueKey='id'
+            type='email',
+            clearable
+            v-model='colaborador.email',
+            :valorInicial='colaborador.email'
           )
+        el-col(:span="4")
+          span Telefone:
+          el-input(
+            placeholder='Telefone:',
+            rules='required',
+            clearable
+            v-model='colaborador.telefone',
+            :valorInicial='colaborador.telefone',
+            v-mask='\'(##) #####-####\''
+          )
+    panel(
+      title="Usuário"
+    )
+      el-row
+        el-col(:span="8")
+          span Senha:
+          el-input(
+            placeholder='Senha:',
+            show-password
+            rules='required',
+            clearable
+            type="password"
+            v-model='colaborador.usuario.senha',
+            :valorInicial='colaborador.cpfCnpj',
+          )
+      span.warning * O login de acesso será equivalente ao CPF
+
+
     .footer
-      el-button.btnCancelar(@click='this.$route.push("cadastrarFuncionarios")')
-        font-awesome-icon.icon(:icon='["fas", "times"]')
+      el-button(type='danger' @click='voltarListagemFuncionario()' icon="el-icon-close")
         span Cancelar
 
-      el-button.btnSalvar(@click='salvar', type='primary')
-        font-awesome-icon.icon(:icon='["fas", "save"]')
+      el-button.btnSalvar(@click='salvar()', type='success' icon="el-icon-success")
         span {{ " " + "Salvar" }}
 </template>
 
@@ -169,6 +192,7 @@ import Panel from "@/components/Panel.vue";
 import configs from "@/constants/configs";
 import SelectCampoObrigatorioVue from "@/components/SelectCampoObrigatorio.vue";
 import InputCampo from "@/components/InputCampoObrigatorio.vue";
+import funcoes from "@/methods/funções";
 
 export default {
   name: "CadastroColaboradores",
@@ -180,6 +204,31 @@ export default {
   data() {
     return {
       contador: 0,
+      sexo: [
+        {
+          value: "MASCULINO",
+        },
+        {
+          value: "FEMININO",
+        },
+      ],
+      role: [
+        {
+          value: "ADMIN",
+        },
+        {
+          value: "USER",
+        },
+        {
+          value: "GERENTE",
+        },
+        {
+          value: "CAIXA",
+        },
+        {
+          value: "VENDEDOR",
+        },
+      ],
       money: {
         decimal: ",",
         thousands: ".",
@@ -211,12 +260,14 @@ export default {
       novoCadastro: false,
       colaborador: {
         usuario: {
+          login: null,
           senha: null,
         },
         sobrenome: null,
         nome: null,
         nomeDaMae: null,
         nomeDoPai: null,
+        role: null,
         uf: {
           id: null,
         },
@@ -232,10 +283,10 @@ export default {
           },
           dadosBancarios: [],
         },
-        cpfCnpj: null,
+        cpf: null,
         rg: null,
         cnhCategoria: [],
-        dataNascimento: null,
+        data_nascimento: null,
         sexo: null,
         estadoCivil: null,
         pis: null,
@@ -244,11 +295,8 @@ export default {
         municipioNaturalidade: {
           id: null,
         },
-        municipioEndereco: {
-          id: null,
-        },
-        bairro: null,
-        logradouro: null,
+        cidade: null,
+        endereco: null,
         numero: null,
         cep: null,
         email: null,
@@ -331,74 +379,67 @@ export default {
   async mounted() {},
 
   methods: {
-    async searchCep() {
-      this.cepEncontrado = false;
-      if (!this.colaborador.cep) {
-        return this.alertWarning("Digite um CEP!");
-      } else if (this.colaborador.cep.length < 9) {
-        return this.alertWarning("Formato do cep incorreto.");
-      } else {
-        const axios = require("axios").default;
-        this.buscarCep = await axios.get(
-          `https://viacep.com.br/ws/${this.colaborador.cep}/json/`
-        );
-        if (this.buscarCep.data.erro) {
-          return this.alertWarning("Cep inexistente!");
+    sendFormattedCPF(dados) {
+      const cpfWithoutFormat = dados.replace(/[^\d]/g, "");
+      return (this.colaborador.cpf = cpfWithoutFormat);
+    },
+    async salvar() {
+      try {
+        this.colaborador.cpf = this.sendFormattedCPF(this.colaborador.cpf);
+        this.colaborador.usuario.login = this.colaborador.cpf;
+        const value = await funcoes.cadastroFuncionario(this.colaborador);
+        if (value) {
+          this.$notify({
+            title: "Success",
+            message: "Usuário cadastrado com sucesso",
+            type: "success",
+          });
+          this.$router.push({
+            name: "listagemFuncionarios",
+          });
         }
-        this.cepEncontrado = true;
-        this.buscarCep = this.buscarCep.data;
-        this.buscarCep.bairro !== ""
-          ? (this.colaborador.bairro = this.buscarCep.bairro)
-          : (this.colaborador.bairro = null);
-        this.buscarCep.logradouro !== ""
-          ? (this.colaborador.logradouro = this.buscarCep.logradouro)
-          : (this.colaborador.logradouro = null);
-        this.colaborador.municipioEndereco.id = Number(this.buscarCep.ibge);
-        if (this.buscarCep.logradouro) {
-          this.logradouroEncontrado = true;
-          this.block = 0;
-        } else {
-          this.block = 1;
-        }
-        if (this.buscarCep.bairro) {
-          this.block = 0;
-          this.buscarCep.bairro = true;
-        } else {
-          this.block = 1;
-        }
+      } catch (error) {
+        this.$notify.error({
+          title: "Error",
+          message: "Erro ao cadastar usuário, verifique todos os campos",
+        });
       }
     },
-    goToSelecaoModulos() {
-      window.location.href =
-        "http://" +
-        (process.env.NODE_ENV === "development"
-          ? window.location.hostname + ":8081"
-          : window.location.hostname) +
-        "/#/selecionarModulo";
-    },
-    openDialog() {
-      this.textDialog = this.$route.params.messageExitPage;
-      this.showDialog = true;
-    },
-    confirmar() {
-      this.redirectToListagem();
-    },
-    formatDeppendentData() {
-      this.colaborador.dependentes.map((v) => {
-        if (v.parentesco === "Mãe") {
-          v.parentesco = "MAE";
-        } else if (v.parentesco === "Avó") {
-          v.parentesco = "AVO";
-        } else if (v.parentesco === "Avô") {
-          v.parentesco = "AVO_MASCULINO";
-        } else if (v.parentesco === "Sobrinho(a)") {
-          v.parentesco = "SOBRINHO";
-        } else if (v.parentesco === "Filho(a)") {
-          v.parentesco = "FILHO";
-        } else {
-          v.parentesco = "PAI";
-        }
+    voltarListagemFuncionario() {
+      this.$router.push({
+        name: "listagemFuncionarios",
       });
+    },
+    async searchCep() {
+      this.cepEncontrado = false;
+      const axios = require("axios").default;
+      this.buscarCep = await axios.get(
+        `https://viacep.com.br/ws/${this.colaborador.cep}/json/`
+      );
+      console.log(this.buscarCep);
+      this.cepEncontrado = true;
+      this.buscarCep = this.buscarCep.data;
+      this.colaborador.cidade = this.buscarCep.localidade;
+      this.colaborador.estado = this.buscarCep.uf;
+      this.buscarCep.bairro !== ""
+        ? (this.colaborador.bairro = this.buscarCep.bairro)
+        : (this.colaborador.bairro = null);
+      this.buscarCep.logradouro !== ""
+        ? (this.colaborador.endereco = this.buscarCep.logradouro)
+        : (this.colaborador.endereco = null);
+      this.colaborador.municipioEndereco.id = Number(this.buscarCep.ibge);
+      if (this.buscarCep.logradouro) {
+        this.logradouroEncontrado = true;
+        this.block = 0;
+      } else {
+        this.block = 1;
+      }
+      if (this.buscarCep.bairro) {
+        this.block = 0;
+        this.buscarCep.bairro = true;
+      } else {
+        this.block = 1;
+      }
     },
     redirectToListagem() {
       this.$router.push({
@@ -509,6 +550,22 @@ export default {
 <style lang="scss" scoped>
 * {
   padding: 10px;
+}
+
+span {
+  font-weight: bold;
+}
+
+.warning {
+  color: #ff0000;
+}
+
+.data {
+  display: flex;
+  margin-left: 5px;
+  justify-content: center;
+  align-content: center;
+  height: 100%;
 }
 
 .footer {

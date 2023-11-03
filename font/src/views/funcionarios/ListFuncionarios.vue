@@ -1,20 +1,21 @@
 <template lang="pug">
-    div.data
-        el-card.data
-          div(style="display:flex; position:relative; align-items:center; justify-content:space-between;")
-            div
-              span(style="font-weight:bold; font-size:20px") Listagem de funcionários
-            div
-              el-button(type="info" class="el-icon-plus" @click="cadastrarFuncionario()")  Cadastrar funcionario
-          data-table(
-              :pageable='pageable',
-              :data="listaData.content",
-              :columns='columns',
-              stripe,
-              @atualizarTabela='atualizarTabela',
-              :acoes='acoes',
-              )
-    </template>
+div.data
+  el-card.data
+    div(style="display:flex; position:relative; align-items:center; justify-content:space-between;")
+      div
+        span(style="font-weight:bold; font-size:20px") Listagem de funcionários
+      div
+        el-button(type="info" class="el-icon-plus" @click="cadastrarFuncionario()")  Cadastrar funcionario
+    data-table(
+      :pageable='pageable',
+      :data="listaData.content",
+      :columns='columns',
+      stripe,
+      @excluir="modalExcluir"
+      @atualizarTabela='atualizarTabela',
+      :acoes='acoes',
+    )
+</template>
 <script>
 import DataTable from "@/components/DataTable.vue";
 import Panel from "@/components/Panel.vue";
@@ -42,12 +43,17 @@ export default {
           codigo: "EXCLUIR",
           icon: "el-icon-delete",
         },
+        {
+          text: "Visualizar",
+          codigo: "VISUALIZAR",
+          icon: "el-icon-view",
+        },
       ],
       columns: [
         {
           label: "Nome",
           prop: "nome",
-          width: "325",
+          width: "300",
         },
         {
           label: "Sobrenome",
@@ -57,12 +63,19 @@ export default {
         {
           label: "Data de nascimento",
           prop: "data_nascimento",
-          width: "250",
+          width: "200",
         },
         {
           label: "Perfil",
           prop: "usuario.role.name",
+          width: "150",
+        },
+        {
+          label: "Cpf",
+          prop: "cpf",
           width: "200",
+          formatter: ({ cpf }) =>
+            cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4"),
         },
         {
           label: "Contato",
@@ -72,7 +85,7 @@ export default {
         {
           label: "Sexo",
           prop: "sexo",
-          width: "200",
+          width: "120",
         },
       ],
     };
@@ -81,6 +94,42 @@ export default {
     await this.listAllFuncionarioPage();
   },
   methods: {
+    modalExcluir(data) {
+      this.$confirm("Deseja excluir este usuário?", {
+        type: "warning",
+        title: "Aviso",
+        center: true,
+        roundButton: true,
+        confirmButtonText: "Sim",
+        cancelButtonText: "Não",
+      })
+        .then((confirm) => {
+          window.dispatchEvent(new Event("resize"));
+          this.excluir(data);
+          data(confirm);
+        })
+        .catch((cancel) => {
+          cancel;
+        });
+    },
+    async excluir(data) {
+      await funcoes
+        .excluirFuncionario(data.id)
+        .then(async () => {
+          await this.listAllFuncionarioPage();
+          this.$notify({
+            title: "Sucesso!",
+            message: "Registro Deletado!",
+            type: "success",
+          });
+        })
+        .catch((erro) => {
+          this.$notify.error({
+            title: "Erro!",
+            message: erro,
+          });
+        });
+    },
     cadastrarFuncionario() {
       this.$router.push({
         name: "cadastrarFuncionarios",

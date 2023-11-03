@@ -24,7 +24,7 @@ public class Pessoa {
 
     private String sobrenome;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone="GMT-3")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", timezone="GMT-3")
     private Date data_nascimento;
 
     private String cpf;
@@ -35,7 +35,7 @@ public class Pessoa {
 
     private String endereco;
 
-    private String cidade;
+    private  String logradouro;
 
     private String estado;
 
@@ -44,6 +44,9 @@ public class Pessoa {
     private String email;
 
     private String sexo;
+
+    @Transient
+    private String perfil;
 
     @OneToOne
     @JoinColumn(name = "usuario_id", referencedColumnName = "id")

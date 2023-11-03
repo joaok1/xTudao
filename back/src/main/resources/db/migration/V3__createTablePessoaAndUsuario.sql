@@ -29,10 +29,5 @@ CREATE TABLE pessoa (
     ON UPDATE CASCADE
     ON DELETE CASCADE
 );
-CREATE TABLE usuario_seq (
-  next_val BIGINT
-);
-CREATE TABLE pessoa_seq (
-  next_val BIGINT
-);
+
 

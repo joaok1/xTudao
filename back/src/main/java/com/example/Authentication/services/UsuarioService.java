@@ -6,6 +6,7 @@ import com.example.Authentication.model.Usuario;
 import com.example.Authentication.repository.PessoaRepository;
 import com.example.Authentication.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -70,5 +72,14 @@ public class UsuarioService implements UserDetailsService {
         Pessoa pessoaOptional =  pessoaRepository.findByUsuario(user).get();
         user.setNamePessoa(pessoaOptional.getNome()+ " " + pessoaOptional.getSobrenome());
         return user;
+    }
+
+    public ResponseEntity<String> deleteById(Short id) {
+        Pessoa pessoa = pessoaRepository.findById(id).get();
+        if (Objects.isNull(pessoa)) {
+            throw new RuntimeException("Pessoa ausente");
+        }
+        usuarioRepository.deleteById(pessoa.getUsuario().getId());
+        return ResponseEntity.ok().body("Deletado com sucesso");
     }
 }

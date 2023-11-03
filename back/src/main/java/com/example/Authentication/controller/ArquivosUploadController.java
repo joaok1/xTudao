@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/arquivos")
+@CrossOrigin(origins = "http://localhost:3000/")
 public class ArquivosUploadController {
     @Autowired
     private ArquivosUploadService arquivosUploadService;
@@ -38,20 +39,17 @@ public class ArquivosUploadController {
 //    }
 
 
-    @CrossOrigin(origins = "http://localhost:8080/")
     @PostMapping("/upload")
     public String uploadFIle(@RequestParam("file") MultipartFile file) throws Exception {
         return arquivosUploadService.saveTemp(file);
     }
 
 
-    @CrossOrigin(origins = "http://localhost:8080/")
     @PostMapping("/uploadUser")
     public String uploadFIle(@RequestBody FileName file) throws Exception {
         return arquivosUploadService.save(file);
     }
 
-    @CrossOrigin(origins = "http://localhost:8080/")
     @PostMapping("/image")
     public ResponseEntity<Resource> getImage(@RequestBody FileName fileName) throws Exception {
         return arquivosUploadService.getImagem(fileName.getKey());

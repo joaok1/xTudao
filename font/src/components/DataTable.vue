@@ -1,6 +1,7 @@
 <template lang="pug">
 div(class="fornecedores")
     el-table.table(
+      border
       :data="data"
       :default-sort="defaultSort"
       :header-cell-style="headerStyle"
@@ -41,7 +42,6 @@ div(class="fornecedores")
         :formatter="typeof col.formatter === 'function' ? col.formatter : null"
       )
       el-table-column(
-        fixed="right"
         v-if="acoes && acoes.length > 1",
         label="Ações",
         width="220",
@@ -49,9 +49,10 @@ div(class="fornecedores")
         align="center"
       )
         template(slot-scope="scope")
-          el-button(v-for="acao in acoes", :key="acao.text", @click.native="buttonAction(scope.row, acao.codigo)" type="text" size="small")
-            div(style="display:flex;align-items:center")
-              i.textButton(:class="acao.icon") {{acao.text}}
+          el-button(v-for="acao in acoes", :key="acao.text", @click.native="buttonAction(scope.row, acao.codigo)" size="small" circle :type="getButtonType(acao.codigo)" )
+            el-tooltip(:content="acao.text" placement="bottom" effect="light" )
+              div(style="display:flex;align-items:center")
+                i.textButton(:class="acao.icon")
       //- APPEND DA TABELA
       template(slot="append")
         slot(name="appendTable")
@@ -130,6 +131,17 @@ export default {
     },
   },
   methods: {
+    getButtonType(value) {
+      if (value === "EDITAR") {
+        return "primary";
+      }
+      if (value === "EXCLUIR") {
+        return "danger";
+      }
+      if (value === "VISUALIZAR") {
+        return "warning";
+      }
+    },
     sort(data) {
       const ordenacaoFiltro = {
         ordem: data.prop,
