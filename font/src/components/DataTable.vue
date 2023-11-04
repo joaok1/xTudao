@@ -139,7 +139,7 @@ export default {
         return "danger";
       }
       if (value === "VISUALIZAR") {
-        return "warning";
+        return "info";
       }
     },
     sort(data) {

@@ -34,6 +34,12 @@ public class PessoaController {
         return ResponseEntity.ok("Pessoa Cadastrada com sucesso");
     }
 
+    @PutMapping(value = "editar", produces = "application/json")
+    public ResponseEntity<String> editarPessoa(@RequestBody PessoaDTO pessoaDTO) throws Exception {
+        pessoaService.editarPessoa(pessoaDTO);
+        return ResponseEntity.ok("Pessoa Cadastrada com sucesso");
+    }
+
     @GetMapping(value = "findById/{id}", produces = "application/json")
     public Optional<Pessoa> findById(@PathVariable Short id) {
         return pessoaService.findById(id);

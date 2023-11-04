@@ -67,7 +67,27 @@ const actions = {
         Authorization: `Bearer ${Cookies.get("token")}`,
       },
     };
-    console.log(data);
+    return axios(data);
+  },
+  async findByIdPessoa(id) {
+    const data = {
+      method: "get",
+      url: `http://localhost:1080/api/pessoa/findById/${id}`,
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+    };
+    return axios(data);
+  },
+  async editarFuncionario(object) {
+    const data = {
+      method: "put",
+      url: `http://localhost:1080/api/pessoa/editar`,
+      data: object,
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+    };
     return axios(data);
   },
 };

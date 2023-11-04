@@ -35,9 +35,15 @@ public class Pessoa {
 
     private String endereco;
 
+    private String bairro;
+
     private  String logradouro;
 
+    private String cidade;
+
     private String estado;
+
+    private String numero;
 
     private String telefone;
 

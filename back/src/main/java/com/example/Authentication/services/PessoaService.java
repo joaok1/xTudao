@@ -49,15 +49,17 @@ public class PessoaService {
             pessoaDTO.getUsuario().setSenha(senhaCripto);
             Pessoa pessoa = new Pessoa();
             pessoa.setNome(pessoaDTO.getNome());
+            pessoa.setNumero(pessoaDTO.getNumero());
             pessoa.setSobrenome(pessoaDTO.getSobrenome());
             pessoa.setCpf(pessoaDTO.getCpf());
             pessoa.setEmail(pessoaDTO.getEmail());
             pessoa.setCep(pessoa.getCep());
-            pessoa.setLogradouro(pessoaDTO.getLogradouro());
+//            pessoa.setLogradouro(pessoaDTO.getLogradouro());
             pessoa.setData_nascimento(pessoaDTO.getData_nascimento());
             pessoa.setSexo(pessoaDTO.getSexo());
             pessoa.setEndereco(pessoaDTO.getEndereco());
             pessoa.setCep(pessoaDTO.getCep());
+            pessoa.setBairro(pessoa.getBairro());
             pessoa.setLogradouro(pessoaDTO.getCidade());
             pessoa.setEstado(pessoaDTO.getEstado());
             pessoa.setTelefone(pessoaDTO.getTelefone());
@@ -74,6 +76,42 @@ public class PessoaService {
             throw new Exception("Não foi possivel criar o usuario.",e);
         } catch (Exception e) {
             throw new RuntimeException("Não foi possivel criar o usuario",e);
+        }
+    }
+
+    public void editarPessoa(PessoaDTO pessoaDTO) throws Exception {
+        try {
+            String senhaCripto = passwordEncoder.encode(pessoaDTO.getUsuario().getSenha());
+            pessoaDTO.getUsuario().setSenha(senhaCripto);
+            Pessoa pessoa = pessoaRepository.findById(pessoaDTO.getId()).get();
+            pessoa.setNome(pessoaDTO.getNome());
+            pessoa.setNumero(pessoaDTO.getNumero());
+            pessoa.setSobrenome(pessoaDTO.getSobrenome());
+            pessoa.setCpf(pessoaDTO.getCpf());
+            pessoa.setEmail(pessoaDTO.getEmail());
+            pessoa.setCep(pessoa.getCep());
+//            pessoa.setLogradouro(pessoaDTO.getLogradouro());
+            pessoa.setData_nascimento(pessoaDTO.getData_nascimento());
+            pessoa.setSexo(pessoaDTO.getSexo());
+            pessoa.setEndereco(pessoaDTO.getEndereco());
+            pessoa.setCep(pessoaDTO.getCep());
+            pessoa.setBairro(pessoa.getBairro());
+            pessoa.setLogradouro(pessoaDTO.getCidade());
+            pessoa.setEstado(pessoaDTO.getEstado());
+            pessoa.setTelefone(pessoaDTO.getTelefone());
+            Usuario usuario = pessoa.getUsuario();
+            usuario.setLogin(pessoaDTO.getCpf());
+            Role role = roleRepository.findByName(pessoaDTO.getRole()).get();
+            usuario.setRole(role);
+            usuario.setSenha(pessoaDTO.getUsuario().getSenha());
+//            usuario.setDocumento(arquivosUploadService.save(pessoaDTO.getFile()));
+            usuarioRepository.save(usuario);
+            pessoa.setUsuario(usuario);
+            pessoaRepository.save(pessoa);
+        } catch (DataAccessException e) {
+            throw new Exception("Não foi possivel editar o usuario.",e);
+        } catch (Exception e) {
+            throw new RuntimeException("Não foi editar criar o usuario",e);
         }
     }
 
@@ -95,4 +133,6 @@ public class PessoaService {
     public Page<Pessoa> findByAll(Pageable pageable) {
         return pessoaRepository.findAll(pageable);
     }
+
+
 }

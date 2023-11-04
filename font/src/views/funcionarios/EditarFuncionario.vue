@@ -176,7 +176,7 @@ div
             v-model='colaborador.usuario.senha',
             :valorInicial='colaborador.cpfCnpj',
           )
-      span.warning * O login de acesso será equivalente ao CPF
+      span.warning * A senha esta criptografada, caso queira mudar e so limpar o campo e digitar a nova senha
 
 
     .footer
@@ -259,6 +259,7 @@ export default {
       banco: null,
       novoCadastro: false,
       colaborador: {
+        id: null,
         usuario: {
           login: null,
           senha: null,
@@ -376,9 +377,17 @@ export default {
       valorValeTransporte: null,
     };
   },
-  async mounted() {},
+  async mounted() {
+    await this.findByIdPessoa(this.$route.params.idFuncionario);
+  },
 
   methods: {
+    async findByIdPessoa(id) {
+      const dados = await funcoes.findByIdPessoa(id);
+      this.colaborador = dados.data;
+      this.colaborador.role = dados.data.usuario.role.name;
+      console.log(dados);
+    },
     sendFormattedCPF(dados) {
       const cpfWithoutFormat = dados.replace(/[^\d]/g, "");
       return (this.colaborador.cpf = cpfWithoutFormat);
@@ -387,11 +396,11 @@ export default {
       try {
         this.colaborador.cpf = this.sendFormattedCPF(this.colaborador.cpf);
         this.colaborador.usuario.login = this.colaborador.cpf;
-        const value = await funcoes.cadastroFuncionario(this.colaborador);
+        const value = await funcoes.editarFuncionario(this.colaborador);
         if (value) {
           this.$notify({
             title: "Success",
-            message: "Usuário cadastrado com sucesso",
+            message: "Usuário editado com sucesso",
             type: "success",
           });
           this.$router.push({
@@ -401,7 +410,7 @@ export default {
       } catch (error) {
         this.$notify.error({
           title: "Error",
-          message: "Erro ao cadastar usuário, verifique todos os campos",
+          message: "Erro ao editado usuário",
         });
       }
     },

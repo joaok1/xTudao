@@ -12,9 +12,9 @@
     :router="true"
   >
     <img class="logo" src="@/assets/logo.png" />
-    <el-menu-item  @click="collapse(isCollapse)" >
+    <!-- <el-menu-item  @click="collapse(isCollapse)" >
       <i :class="isCollapse === true ? 'el-icon-s-unfold' : 'el-icon-s-fold'" class="collapse"></i>
-    </el-menu-item>
+    </el-menu-item> -->
     <el-menu-item index="home" @click="home()">
       <i class="el-icon-s-home"></i>
       <span slot="title">Home</span>
@@ -27,7 +27,7 @@
       <i class="el-icon-burger"></i>
       <span slot="title">Lanches</span>
     </el-menu-item>
-    <el-menu-item index="listagemFuncionarios" @click="funcionarios()">
+    <el-menu-item :index="routeFuncionario()" @click="funcionarios()">
       <i class="el-icon-user"></i>
       <span slot="title">Funcionários</span>
     </el-menu-item>
@@ -80,6 +80,21 @@ export default {
     await this.getUserName();
   },
   methods: {
+    routeFuncionario() {
+      switch (this.$route.name) {
+        case "listFuncionarios":
+          "listFuncionarios";
+          break;
+        case "cadastrarFuncionario":
+          "cadastrarFuncionario";
+          break;
+        case "visualizarFuncionario":
+          "visualizarFuncionario";
+          break;
+        default:
+          break;
+      }
+    },
     collapse(value) {
       if (value === false) {
         this.isCollapse = true;
@@ -116,9 +131,9 @@ export default {
       }
     },
     funcionarios() {
-      if (this.$route.name !== "listagemFuncionarios") {
+      if (this.$route.name !== "listFuncionarios") {
         this.$router.push({
-          name: "listagemFuncionarios",
+          name: "listFuncionarios",
           // params: { dadosProduto, messageExitPage },
         });
       }

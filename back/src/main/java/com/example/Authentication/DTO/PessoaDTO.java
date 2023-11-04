@@ -15,9 +15,14 @@ import java.util.Date;
 @NoArgsConstructor
 @Component
 public class PessoaDTO {
+
+    private Short id;
+
     private String nome;
 
     private String sobrenome;
+
+    private String numero;
 
     private String sexo;
 
@@ -35,6 +40,8 @@ public class PessoaDTO {
     private String logradouro;
 
     private String cidade;
+
+    private String bairro;
 
     private String estado;
 

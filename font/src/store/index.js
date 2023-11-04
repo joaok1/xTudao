@@ -44,13 +44,13 @@ function messageError() {
 }
 function messageSucess() {
   Element.Notification.success({
-    title: "Success",
+    title: "Successo",
     message: "Seja bem-vindo!",
   });
 }
 function messageLogout() {
   Element.Notification.warning({
-    title: "Warning",
+    title: "Aviso",
     message: "Voce será deslogado em breve!",
   });
 }

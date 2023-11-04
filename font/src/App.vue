@@ -4,19 +4,24 @@ div
     div(v-if="this.$route.name !== 'Login'")
       SideMenu
     div
-      <router-view />
+      router-view
   div.layout(v-if="this.$route.name !== 'Login'")
     div.sideMenu
       SideMenu
     div.content
-      <router-view />
+      router-view
 </template>
 <script>
 import SideMenu from "./views/SideMenu.vue";
-
+import { mapState } from "vuex";
 export default {
   components: {
     SideMenu,
+  },
+  computed: {
+    ...mapState({
+      loader: (state) => state.loader,
+    }),
   },
   data() {
     return {

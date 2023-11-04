@@ -5,13 +5,15 @@ div.data
       div
         span(style="font-weight:bold; font-size:20px") Listagem de funcionários
       div
-        el-button(type="info" class="el-icon-plus" @click="cadastrarFuncionario()")  Cadastrar funcionario
+        el-button(type="info" class="el-icon-plus" @click="cadastrarFuncionario()")  Cadastrar funcionário
     data-table(
       :pageable='pageable',
       :data="listaData.content",
       :columns='columns',
       stripe,
+      @editar="editar"
       @excluir="modalExcluir"
+      @visualizar="visualizarFuncionario"
       @atualizarTabela='atualizarTabela',
       :acoes='acoes',
     )
@@ -21,6 +23,7 @@ import DataTable from "@/components/DataTable.vue";
 import Panel from "@/components/Panel.vue";
 import funcoes from "@/methods/funções";
 export default {
+  name: "listagemFuncionarios",
   components: {
     DataTable,
     Panel,
@@ -130,10 +133,25 @@ export default {
           });
         });
     },
+    visualizarFuncionario(data) {
+      this.$router.push({
+        name: "visualizarFuncionario",
+        params: {
+          idFuncionario: data.id,
+        },
+      });
+    },
+    editar(data) {
+      this.$router.push({
+        name: "editarFuncionario",
+        params: {
+          idFuncionario: data.id,
+        },
+      });
+    },
     cadastrarFuncionario() {
       this.$router.push({
-        name: "cadastrarFuncionarios",
-        // params: { dadosProduto, messageExitPage },
+        name: "cadastroFuncionarios",
       });
     },
     atualizarTabela(newPage) {
@@ -143,7 +161,6 @@ export default {
     async listAllFuncionarioPage() {
       const listaData = await funcoes.listAllFuncionarioPage(this.page);
       this.listaData = listaData.data;
-      console.log(this.listaData);
       const { empty, number, numberOfElements, pageable, totalElements } =
         this.listaData;
       this.pageable = {
@@ -160,7 +177,6 @@ export default {
 <style scoped>
 .data {
   display: flex;
-  margin-left: 5px;
   justify-content: center;
   align-content: center;
   height: 100%;
