@@ -54,6 +54,10 @@ public class Pessoa {
     @Transient
     private String perfil;
 
+    @Transient
+    private String role;
+
+
     @OneToOne
     @JoinColumn(name = "usuario_id", referencedColumnName = "id")
     @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})

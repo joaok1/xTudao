@@ -103,7 +103,7 @@ public class PessoaService {
             usuario.setLogin(pessoaDTO.getCpf());
             Role role = roleRepository.findByName(pessoaDTO.getRole()).get();
             usuario.setRole(role);
-            usuario.setSenha(pessoaDTO.getUsuario().getSenha());
+//            usuario.setSenha(pessoaDTO.getUsuario().getSenha());
 //            usuario.setDocumento(arquivosUploadService.save(pessoaDTO.getFile()));
             usuarioRepository.save(usuario);
             pessoa.setUsuario(usuario);
@@ -116,7 +116,9 @@ public class PessoaService {
     }
 
     public Optional<Pessoa> findById(Short id) {
-        return pessoaRepository.findById(id);
+        Optional<Pessoa> pessoa =  pessoaRepository.findById(id);
+        pessoa.get().setRole(pessoa.get().getUsuario().getRole().getName());
+        return pessoa;
     }
 
 

@@ -64,6 +64,7 @@ div
             placeholder="Selecione o cargo",
             clearable
             v-model='colaborador.role'
+            :initialValues = 'colaborador.role'
           )
             el-option(
               v-for="item in role"
@@ -161,22 +162,22 @@ div
             :valorInicial='colaborador.telefone',
             v-mask='\'(##) #####-####\''
           )
-    panel(
-      title="Usuário"
-    )
-      el-row
-        el-col(:span="8")
-          span Senha:
-          el-input(
-            placeholder='Senha:',
-            show-password
-            rules='required',
-            clearable
-            type="password"
-            v-model='colaborador.usuario.senha',
-            :valorInicial='colaborador.cpfCnpj',
-          )
-      span.warning * A senha esta criptografada, caso queira mudar e so limpar o campo e digitar a nova senha
+    //- panel(
+    //-   title="Usuário"
+    //- )
+    //-   el-row
+    //-     el-col(:span="8")
+    //-       span Senha:
+    //-       el-input(
+    //-         placeholder='Senha:',
+    //-         show-password
+    //-         rules='required',
+    //-         clearable
+    //-         type="password"
+    //-         v-model='colaborador.usuario.senha',
+    //-         :valorInicial='colaborador.cpfCnpj',
+    //-       )
+    //-   span.warning * A senha esta criptografada, caso queira mudar e so limpar o campo e digitar a nova senha
 
 
     .footer
@@ -271,18 +272,6 @@ export default {
         role: null,
         uf: {
           id: null,
-        },
-        reservista: null,
-        rgDataExpedicao: null,
-        dependentes: [],
-        funcionario: {
-          supervisorImediato: {
-            id: null,
-            pessoa: {
-              id: null,
-            },
-          },
-          dadosBancarios: [],
         },
         cpf: null,
         rg: null,
@@ -385,7 +374,7 @@ export default {
     async findByIdPessoa(id) {
       const dados = await funcoes.findByIdPessoa(id);
       this.colaborador = dados.data;
-      this.colaborador.role = dados.data.usuario.role.name;
+      // this.colaborador.role = dados.data.usuario.role.name;
       console.log(dados);
     },
     sendFormattedCPF(dados) {
@@ -542,13 +531,6 @@ export default {
         this.cepEncontrado = true;
       } else {
         this.cepEncontrado = false;
-      }
-    },
-    "colaborador.funcionario.dadosBancarios"(val) {
-      if (val.length > 0) {
-        this.boolAddBanco = true;
-      } else {
-        this.boolAddBanco = false;
       }
     },
   },
