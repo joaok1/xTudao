@@ -375,7 +375,7 @@ export default {
       const dados = await funcoes.findByIdPessoa(id);
       this.colaborador = dados.data;
       // this.colaborador.role = dados.data.usuario.role.name;
-      console.log(dados);
+      console.log(this.colaborador);
     },
     sendFormattedCPF(dados) {
       const cpfWithoutFormat = dados.replace(/[^\d]/g, "");

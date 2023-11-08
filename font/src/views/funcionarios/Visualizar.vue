@@ -7,30 +7,13 @@ div
       el-row
           el-col(:span="8")
             span Nome:
-            el-input(
-                disabled
-                v-model='pessoa.nome',
-                placeholder='Sobrenome:',
-                clearable
-            )
+            p {{ pessoa.nome }}
           el-col(:span="8")
             span Sobrenome:
-            el-input(
-                disabled
-              v-model='pessoa.sobrenome',
-              placeholder='Sobrenome:',
-              clearable
-            )
+            p {{ pessoa.sobrenome }}
           el-col(:span="4")
             span Sexo:
-            el-input(
-                disabled
-                v-model='pessoa.sexo',
-                :initialValues='pessoa.sexo',
-                name='sexo',
-                placeholder='Sexo:',
-                clearable
-            )
+            p {{ pessoa.sexo }}
           el-col(:span="4")
             span Data de nascimento:
             el-date-picker(
@@ -48,115 +31,43 @@ div
       el-row
         el-col(:span="6")
           span CPF:
-          el-input(
-            disabled
-            placeholder='CPF:',
-            clearable
-            rules='required',
-            v-model='pessoa.cpf',
-            v-mask='\'###.###.###-##\'',
-            :valorInicial='pessoa.cpf',
-          )
+          p {{ this.sendFormattedCPF(pessoa.cpf) }}
         el-col(:span="4")
           span Cargo:
-          el-input(
-            disabled
-            placeholder="Selecione o cargo",
-            clearable
-            v-model='pessoa.usuario.role.name'
-          )
+          p {{ pessoa.usuario.role.name }}
     panel(
         title="Endereço"
     )
       el-row
         el-col(:span="4")
           span CEP:
-          el-input(
-            disabled
-            placeholder='CEP:',
-            rules='required',
-            clearable
-            v-model='pessoa.cep',
-            :valorInicial='pessoa.cep',
-            v-mask='\'#####-###\'',
-          )
+          p {{ pessoa.cep }}
         el-col(:span="6")
           span Município:
-          el-input(
-            disabled
-            v-model='pessoa.cidade',
-            name='municipio',
-            clearable
-            placeholder='Município:',
-          )
+          p {{ pessoa.cidade }}
         el-col(:span="6", style="padding:10px")
           span Logradouro:
-          el-input(
-            disabled
-            placeholder='Logradouro:',
-            rules='required',
-            clearable
-            v-model='pessoa.endereco',
-            :valorInicial='pessoa.endereco',
-            maxlength='300'
-          )
+          p {{ pessoa.endereco }}
         el-col(:span="6")
           span Número:
-          el-input(
-            disabled
-            placeholder='Número:',
-            rules='required',
-            clearable
-            v-model='pessoa.numero',
-            :valorInicial='pessoa.numero'
-          )
+          p {{ pessoa.numero }}
           el-row
         el-col(:span="4")
           span Bairro:
-          el-input(
-            disabled
-            placeholder='Bairro:',
-            rules='required',
-            clearable
-            v-model='pessoa.bairro',
-            :valorInicial='pessoa.bairro'
-          )
+          p {{ pessoa.bairro }}
         el-col(:span="4")
           span Estado:
-          el-input(
-            disabled
-            placeholder='Estado:',
-            rules='required',
-            clearable
-            v-model='pessoa.estado',
-            :valorInicial='pessoa.estado'
-          )
+          p {{ pessoa.estado }}
     panel(
       title="Contatos"
     )
       el-row
         el-col(:span="8")
           span Email:
-          el-input(
-            disabled
-            placeholder='Email:',
-            rules='required',
-            type='email',
-            clearable
-            v-model='pessoa.email',
-            :valorInicial='pessoa.email'
-          )
+          p {{ pessoa.email }}
         el-col(:span="4")
           span Telefone:
-          el-input(
-            disabled
-            placeholder='Telefone:',
-            rules='required',
-            clearable
-            v-model='pessoa.telefone',
-            :valorInicial='pessoa.telefone',
-            v-mask='\'(##) #####-####\''
-          )
+          p {{ pessoa.telefone }}
     .footer
       el-button(type='info' @click='voltarListagemFuncionario()' icon="el-icon-back")
         span Voltar a listagem
@@ -205,6 +116,13 @@ export default {
     await this.findByIdPessoa(this.$route.params.idFuncionario);
   },
   methods: {
+    sendFormattedCPF(dados) {
+      const cpfWithoutFormat = dados.replace(
+        /(\d{3})(\d{3})(\d{3})(\d{2})/,
+        "$1.$2.$3-$4"
+      );
+      return cpfWithoutFormat;
+    },
     voltarListagemFuncionario() {
       this.$router.push({
         name: "listFuncionarios",
@@ -296,5 +214,13 @@ span {
   .rg {
     width: 100%;
   }
+}
+span {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+p {
+  font-size: 14px;
 }
 </style>

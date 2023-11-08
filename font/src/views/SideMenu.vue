@@ -27,11 +27,11 @@
       <i class="el-icon-burger"></i>
       <span slot="title">Lanches</span>
     </el-menu-item>
-    <el-menu-item :index="routeFuncionario()" @click="funcionarios()">
+    <el-menu-item :index="routeFuncionario()" @click="funcionarios()" :disabled="verifyRoutes(this.role)">
       <i class="el-icon-user"></i>
       <span slot="title">Funcionários</span>
     </el-menu-item>
-    <!-- <div
+    <div
       style="
         bottom: 0em;
         margin-top: 33em;
@@ -39,10 +39,10 @@
         text-align: center;
       "
     >
-      <el-tag index="6" effect="dark" type="info">
-        <span>{{ this.name }}</span>
-      </el-tag>
-    </div> -->
+      <!-- <el-tag index="6" effect="dark" type="warning">
+        <span style="color:#000; font-weight: bold;">{{ this.name }}</span>
+      </el-tag> -->
+    </div>
     <el-menu-item
       index="7"
       style="
@@ -73,6 +73,7 @@ export default {
   data() {
     return {
       name: null,
+      role: null,
       isCollapse: false,
     };
   },
@@ -80,6 +81,12 @@ export default {
     await this.getUserName();
   },
   methods: {
+    verifyRoutes(role) {
+      if (role == "ADMIN" || role == "GERENTE") {
+        return false;
+      }
+      return true;
+    },
     routeFuncionario() {
       switch (this.$route.name) {
         case "listFuncionarios":
@@ -104,6 +111,8 @@ export default {
     },
     async getUserName() {
       const userName = await funcoes.Login();
+      this.role = userName.data.role.name;
+      console.log(userName);
       this.name = userName.data.namePessoa;
     },
     async logout() {

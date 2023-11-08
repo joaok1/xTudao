@@ -13,9 +13,11 @@ div
 </template>
 <script>
 import SideMenu from "./views/SideMenu.vue";
+import Footer from "./components/Footer.vue";
 import { mapState } from "vuex";
 export default {
   components: {
+    Footer,
     SideMenu,
   },
   computed: {

@@ -95,8 +95,8 @@ public class PessoaService {
             pessoa.setSexo(pessoaDTO.getSexo());
             pessoa.setEndereco(pessoaDTO.getEndereco());
             pessoa.setCep(pessoaDTO.getCep());
-            pessoa.setBairro(pessoa.getBairro());
-            pessoa.setLogradouro(pessoaDTO.getCidade());
+            pessoa.setBairro(pessoaDTO.getBairro());
+            pessoa.setCidade(pessoaDTO.getCidade());
             pessoa.setEstado(pessoaDTO.getEstado());
             pessoa.setTelefone(pessoaDTO.getTelefone());
             Usuario usuario = pessoa.getUsuario();
