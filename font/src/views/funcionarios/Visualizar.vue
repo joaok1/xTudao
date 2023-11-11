@@ -44,7 +44,7 @@ div
           p {{ pessoa.cep }}
         el-col(:span="6")
           span Município:
-          p {{ pessoa.cidade }}
+          p {{ pessoa.municipio }}
         el-col(:span="6", style="padding:10px")
           span Logradouro:
           p {{ pessoa.endereco }}
@@ -95,6 +95,7 @@ export default {
         logradouro: null,
         estado: null,
         email: null,
+        municipio: null,
         sexo: null,
         perfil: null,
         usuario: {

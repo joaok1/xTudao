@@ -59,8 +59,9 @@ public class PessoaService {
             pessoa.setSexo(pessoaDTO.getSexo());
             pessoa.setEndereco(pessoaDTO.getEndereco());
             pessoa.setCep(pessoaDTO.getCep());
-            pessoa.setBairro(pessoa.getBairro());
-            pessoa.setLogradouro(pessoaDTO.getCidade());
+            pessoa.setBairro(pessoaDTO.getBairro());
+            pessoa.setMunicipio(pessoaDTO.getMunicipio());
+            pessoa.setLogradouro(pessoaDTO.getBairro());
             pessoa.setEstado(pessoaDTO.getEstado());
             pessoa.setTelefone(pessoaDTO.getTelefone());
             Usuario usuario = new Usuario();
@@ -96,7 +97,7 @@ public class PessoaService {
             pessoa.setEndereco(pessoaDTO.getEndereco());
             pessoa.setCep(pessoaDTO.getCep());
             pessoa.setBairro(pessoaDTO.getBairro());
-            pessoa.setCidade(pessoaDTO.getCidade());
+            pessoa.setMunicipio(pessoaDTO.getMunicipio());
             pessoa.setEstado(pessoaDTO.getEstado());
             pessoa.setTelefone(pessoaDTO.getTelefone());
             Usuario usuario = pessoa.getUsuario();

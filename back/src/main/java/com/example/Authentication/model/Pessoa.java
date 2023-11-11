@@ -33,6 +33,8 @@ public class Pessoa {
 
     private String cep;
 
+    private String municipio;
+
     private String endereco;
 
     private String bairro;

@@ -22,6 +22,8 @@ public class PessoaDTO {
 
     private String sobrenome;
 
+    private String municipio;
+
     private String numero;
 
     private String sexo;

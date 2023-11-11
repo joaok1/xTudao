@@ -91,7 +91,7 @@ div
         el-col(:span="6")
           span Município:
           el-input(
-            v-model='colaborador.cidade',
+            v-model='colaborador.municipio',
             name='municipio',
             clearable
             :disabled='cepEncontrado',
@@ -285,7 +285,7 @@ export default {
         municipioNaturalidade: {
           id: null,
         },
-        cidade: null,
+        municipio: null,
         endereco: null,
         numero: null,
         cep: null,
@@ -416,7 +416,7 @@ export default {
       );
       this.cepEncontrado = true;
       this.buscarCep = this.buscarCep.data;
-      this.colaborador.cidade = this.buscarCep.localidade;
+      this.colaborador.municipio = this.buscarCep.localidade;
       this.colaborador.estado = this.buscarCep.uf;
       this.buscarCep.bairro !== ""
         ? (this.colaborador.bairro = this.buscarCep.bairro)
